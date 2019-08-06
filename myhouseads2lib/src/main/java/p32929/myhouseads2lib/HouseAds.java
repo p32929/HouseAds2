@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,6 +39,15 @@ public class HouseAds {
                 Toast.makeText(context, "" + error, Toast.LENGTH_SHORT).show();
             }
         }).execute();
+    }
+
+    public void removeSameAppAds() {
+        for (int i = 0; i < adArrayList.size(); i++) {
+            if (adArrayList.get(i).getUrl().contains(context.getPackageName())) {
+                adArrayList.remove(i);
+                break;
+            }
+        }
     }
 
     public void showInterAds() {
