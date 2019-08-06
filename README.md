@@ -6,10 +6,11 @@ A library ( V2 ) for cross promoting own apps within own apps - for Android
 ## Screenshot:
 ### Banner Ad
 
-![Screenshot_20190806_200048_p32929 myhouseads2](https://user-images.githubusercontent.com/6418354/62546571-856a2d00-b885-11e9-87e4-d3dbe24435f1.jpg)
+<img src="https://user-images.githubusercontent.com/6418354/62546571-856a2d00-b885-11e9-87e4-d3dbe24435f1.jpg" width="350">
 
 ### Interstitial ad:
-![Screenshot_20190806_200441_p32929 myhouseads2](https://user-images.githubusercontent.com/6418354/62546573-8602c380-b885-11e9-89be-12ba2643fa55.jpg)
+
+<img src="https://user-images.githubusercontent.com/6418354/62546573-8602c380-b885-11e9-89be-12ba2643fa55.jpg" width="350">
 
 ## How to use:
 ### Steps:
@@ -19,7 +20,7 @@ A library ( V2 ) for cross promoting own apps within own apps - for Android
 ## Code Example:
 ### Initialization:
 
-If you just want to show ads list dialog, initialize like this:
+If you just want to show interstitial ads , initialize like this:
 
 ```
 HouseAds houseAds = new HouseAds(this,
@@ -27,7 +28,8 @@ HouseAds houseAds = new HouseAds(this,
         );
 ```
 
-If you just want to show ads list dialog and banner ads, initialize like this:
+If you just want to show interstitial ads and banner ads, initialize like this:
+
 ```
 HouseAds houseAds = new HouseAds(this,
                 "https://raw.githubusercontent.com/p32929/SomeHowTosAndTexts/master/HouseAdsJson/house_ads2.json",
