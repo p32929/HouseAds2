@@ -28,5 +28,4 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'androidx.recyclerview:recyclerview-selection:1.0.0'
-    implementation 'com.google.code.gson:gson:2.8.5'
 }

@@ -6,9 +6,8 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.google.gson.Gson;
-
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -61,7 +60,19 @@ public class JsonObjectGetter extends AsyncTask<Void, Void, MyAd[]> {
                 sb.append((char) cp);
             }
 
-            MyAd[] myAds = new Gson().fromJson(sb.toString(), MyAd[].class);
+            JSONArray jsonArray = new JSONArray(sb.toString());
+            MyAd[] myAds = new MyAd[jsonArray.length()];
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject object = jsonArray.getJSONObject(i);
+                myAds[i] = new MyAd(
+                        object.getString("appIcon"),
+                        object.getString("appName"),
+                        object.getString("appDescription"),
+                        object.getString("url")
+                );
+            }
+
             return myAds;
         } catch (Exception e) {
             this.exception = e;
