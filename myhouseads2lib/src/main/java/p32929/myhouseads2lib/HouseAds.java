@@ -22,8 +22,11 @@ import java.util.Arrays;
 
 public class HouseAds {
 
-    private String TAG = this.getClass().getSimpleName();
     public static int intervalSeconds = 60;
+    // Timer
+    public static Handler handler = new Handler();
+    private static Runnable mRunnable;
+    private String TAG = this.getClass().getSimpleName();
     //
     private String countSP = "countSP";
     //
@@ -70,6 +73,12 @@ public class HouseAds {
                 Toast.makeText(context, "" + error, Toast.LENGTH_SHORT).show();
             }
         }).execute();
+    }
+
+    public static void doSomethingAfter(double seconds, Runnable runnable) {
+        handler.removeCallbacks(mRunnable);
+        mRunnable = runnable;
+        handler.postDelayed(runnable, (long) (seconds * 1000));
     }
 
     private void putBannerAds() {
@@ -170,15 +179,5 @@ public class HouseAds {
             context.startActivity(new Intent(Intent.ACTION_VIEW,
                     Uri.parse("http://play.google.com/store/apps/details?id=" + context.getPackageName())));
         }
-    }
-
-    // Timer
-    public static Handler handler = new Handler();
-    private static Runnable mRunnable;
-
-    public static void doSomethingAfter(double seconds, Runnable runnable) {
-        handler.removeCallbacks(mRunnable);
-        mRunnable = runnable;
-        handler.postDelayed(runnable, (long) (seconds * 1000));
     }
 }
