@@ -57,6 +57,12 @@ HouseAds houseAds = new HouseAds(this,
         );
 ```
 
+To show interstitial ad on back press:
+
+```
+    houseAds.showInterAds();
+```
+
 The banner ad will be added on the json data load.
 
 The JSON data should be like this:
