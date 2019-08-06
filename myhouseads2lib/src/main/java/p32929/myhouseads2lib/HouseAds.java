@@ -5,8 +5,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,12 +21,18 @@ import java.util.Arrays;
 public class HouseAds {
 
     private String TAG = this.getClass().getSimpleName();
+    public static int intervalSeconds = 3;
+    //
+    private String countSP = "countSP";
     //
     private Context context;
     private ArrayList<MyAd> adArrayList = new ArrayList<>();
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private LinearLayoutManager linearLayoutManager;
+    private LinearLayout linearLayout;
+    private int bannerCount = 0;
+    private MyAdView currentAdView;
 
     public HouseAds(final Context context, String url) {
         this.context = context;
@@ -39,6 +48,61 @@ public class HouseAds {
                 Toast.makeText(context, "" + error, Toast.LENGTH_SHORT).show();
             }
         }).execute();
+    }
+
+    public HouseAds(final Context context, String url, final LinearLayout linearLayout) {
+        this.context = context;
+        this.linearLayout = linearLayout;
+        FayazSP.init(context);
+        bannerCount = FayazSP.getInt(countSP, 0);
+
+        new JsonObjectGetter(context, url, new JsonObjectGetListener() {
+            @Override
+            public void onSuccess(MyAd[] myAds) {
+                adArrayList = new ArrayList<>(Arrays.asList(myAds));
+                putBannerAds();
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(context, "" + error, Toast.LENGTH_SHORT).show();
+            }
+        }).execute();
+    }
+
+    private void putBannerAds() {
+
+        currentAdView = new MyAdView(context, adArrayList.get(bannerCount));
+        if (linearLayout != null)
+            linearLayout.addView(currentAdView);
+
+        startBannerChangeTimer();
+    }
+
+    private void incrementAndSaveCounter() {
+        bannerCount++;
+        if (bannerCount == adArrayList.size()) {
+            bannerCount = 0;
+        }
+
+        FayazSP.put(countSP, bannerCount);
+    }
+
+    private void startBannerChangeTimer() {
+        incrementAndSaveCounter();
+
+        doSomethingAfter(intervalSeconds, new Runnable() {
+            @Override
+            public void run() {
+                Log.d(TAG, "run: Changing Banner: " + bannerCount);
+                if (linearLayout != null) {
+                    linearLayout.removeView(currentAdView);
+                    currentAdView = new MyAdView(context, adArrayList.get(bannerCount));
+                    linearLayout.addView(currentAdView);
+                    startBannerChangeTimer();
+                }
+            }
+        });
     }
 
     public void removeSameAppAds() {
@@ -85,5 +149,16 @@ public class HouseAds {
         sendIntent.putExtra(Intent.EXTRA_TEXT, "Check out this Amazing Android App: https://play.google.com/store/apps/details?id=" + context.getPackageName());
         sendIntent.setType("text/plain");
         context.startActivity(sendIntent);
+    }
+
+
+    // Timer
+    public static Handler handler = new Handler();
+    private static Runnable mRunnable;
+
+    public static void doSomethingAfter(double seconds, Runnable runnable) {
+        handler.removeCallbacks(mRunnable);
+        mRunnable = runnable;
+        handler.postDelayed(runnable, (long) (seconds * 1000));
     }
 }

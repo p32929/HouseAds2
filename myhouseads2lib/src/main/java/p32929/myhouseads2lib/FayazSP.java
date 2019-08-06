@@ -15,7 +15,7 @@ public class FayazSP {
     public static SharedPreferences init(Context context) {
         FayazSP.context = context;
         if (sharedPreferences == null) {
-            sharedPreferences = context.getSharedPreferences("MyAds", Context.MODE_PRIVATE);
+            sharedPreferences = context.getSharedPreferences("HouseAds", Context.MODE_PRIVATE);
         }
         return sharedPreferences;
     }
