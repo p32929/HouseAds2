@@ -17,6 +17,26 @@ A library ( V2 ) for cross promoting own apps within own apps - for Android
 * Initialize
 * Show ads
 
+## Installation
+Add it in your root build.gradle at the end of repositories:
+
+```
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+
+Add the dependency
+
+```
+dependencies {
+	        implementation 'com.github.p32929:HouseAds2:1.0.0.1'
+	}
+```
+
 ## Code Example:
 ### Initialization:
 
