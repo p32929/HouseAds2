@@ -48,7 +48,7 @@ HouseAds houseAds = new HouseAds(this,
         );
 ```
 
-If you just want to show interstitial ads and banner ads, initialize like this:
+If you want to show both interstitial ads and banner ads, initialize like this:
 
 ```
 HouseAds houseAds = new HouseAds(this,
@@ -101,7 +101,7 @@ The JSON data should be like this:
 ]
 ```
 
-Hope, you will enjoy using the library :)
+Check the app example in the project. Hope, you will enjoy using the library :)
 
 ## License
 
