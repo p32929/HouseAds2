@@ -44,7 +44,7 @@ If you just want to show interstitial ads , initialize like this:
 
 ```
 HouseAds houseAds = new HouseAds(this,
-                "https://raw.githubusercontent.com/p32929/SomeHowTosAndTexts/master/HouseAdsJson/house_ads2.json",
+                "https://raw.githubusercontent.com/p32929/SomeHowTosAndTexts/master/HouseAdsJson/house_ads2.json"
         );
 ```
 
