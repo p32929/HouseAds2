@@ -2,9 +2,11 @@ package p32929.myhouseads2lib;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,7 +23,7 @@ import java.util.Arrays;
 public class HouseAds {
 
     private String TAG = this.getClass().getSimpleName();
-    public static int intervalSeconds = 3;
+    public static int intervalSeconds = 60;
     //
     private String countSP = "countSP";
     //
@@ -71,7 +73,6 @@ public class HouseAds {
     }
 
     private void putBannerAds() {
-
         currentAdView = new MyAdView(context, adArrayList.get(bannerCount));
         if (linearLayout != null)
             linearLayout.addView(currentAdView);
@@ -131,10 +132,16 @@ public class HouseAds {
                 .setPositiveButton("Share", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        shareApp(context);
+                        shareApp();
                     }
                 })
-                .setNeutralButton("Exit", new DialogInterface.OnClickListener() {
+                .setNeutralButton("Rate", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        rateApp();
+                    }
+                })
+                .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         ((Activity) context).finish();
@@ -143,7 +150,7 @@ public class HouseAds {
                 .show();
     }
 
-    public void shareApp(Context context) {
+    private void shareApp() {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, "Check out this Amazing Android App: https://play.google.com/store/apps/details?id=" + context.getPackageName());
@@ -151,6 +158,19 @@ public class HouseAds {
         context.startActivity(sendIntent);
     }
 
+    private void rateApp() {
+        Uri uri = Uri.parse("market://details?id=" + context.getPackageName());
+        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        try {
+            context.startActivity(goToMarket);
+        } catch (ActivityNotFoundException e) {
+            context.startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("http://play.google.com/store/apps/details?id=" + context.getPackageName())));
+        }
+    }
 
     // Timer
     public static Handler handler = new Handler();
