@@ -46,6 +46,7 @@ public class HouseAds {
             @Override
             public void onSuccess(MyAd[] myAds) {
                 adArrayList = new ArrayList<>(Arrays.asList(myAds));
+                removeSameAppAds();
             }
 
             @Override
@@ -65,6 +66,7 @@ public class HouseAds {
             @Override
             public void onSuccess(MyAd[] myAds) {
                 adArrayList = new ArrayList<>(Arrays.asList(myAds));
+                removeSameAppAds();
                 putBannerAds();
             }
 
@@ -115,7 +117,7 @@ public class HouseAds {
         });
     }
 
-    public void removeSameAppAds() {
+    private void removeSameAppAds() {
         for (int i = 0; i < adArrayList.size(); i++) {
             if (adArrayList.get(i).getUrl().contains(context.getPackageName())) {
                 adArrayList.remove(i);
