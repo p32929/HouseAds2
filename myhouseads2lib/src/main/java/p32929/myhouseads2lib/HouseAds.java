@@ -83,7 +83,7 @@ public class HouseAds {
         }).execute();
     }
 
-    public static void doSomethingAfter(double seconds, Runnable runnable) {
+    public void doSomethingAfter(double seconds, Runnable runnable) {
         handler.removeCallbacks(mRunnable);
         mRunnable = runnable;
         handler.postDelayed(runnable, (long) (seconds * 1000));
@@ -148,7 +148,7 @@ public class HouseAds {
         adapter = new RecyclerviewAdapter(adArrayList, context);
         recyclerView.setAdapter(adapter);
 
-        String title = adArrayList.size() == 0 ? "Thank you" : "RECOMMENDED APPS";
+        String title = adArrayList.size() == 0 ? "THANK YOU" : "RECOMMENDED APPS";
 
         new AlertDialog
                 .Builder(context)
@@ -163,11 +163,7 @@ public class HouseAds {
                 .setNeutralButton("Rate", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        if (feedbackEmail.isEmpty()) {
-                            rateApp();
-                        } else {
-                            showRateDialog();
-                        }
+                        showRateDialog();
                     }
                 })
                 .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
@@ -188,38 +184,42 @@ public class HouseAds {
     }
 
     public void showRateDialog() {
-        View dialogView = LayoutInflater.from(context).inflate(R.layout.rating_dialog_layout, null);
-        RatingBar ratingBar = dialogView.findViewById(R.id.ratingBar);
-        final EditText editTextFeedback = dialogView.findViewById(R.id.feecbackEt);
-        final Button button = dialogView.findViewById(R.id.submitBtn);
+        if (feedbackEmail.isEmpty()) {
+            rateApp();
+        } else {
+            View dialogView = LayoutInflater.from(context).inflate(R.layout.rating_dialog_layout, null);
+            RatingBar ratingBar = dialogView.findViewById(R.id.ratingBar);
+            final EditText editTextFeedback = dialogView.findViewById(R.id.feecbackEt);
+            final Button button = dialogView.findViewById(R.id.submitBtn);
 
-        final AlertDialog dialog = new AlertDialog.Builder(context)
-                .setView(dialogView)
-                .show();
+            final AlertDialog dialog = new AlertDialog.Builder(context)
+                    .setView(dialogView)
+                    .show();
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (rate > 4) {
-                    rateApp();
-                } else {
-                    sendEmailFeedback(editTextFeedback.getText().toString());
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (rate > 4) {
+                        rateApp();
+                    } else {
+                        sendEmailFeedback(editTextFeedback.getText().toString());
+                    }
+                    dialog.dismiss();
                 }
-                dialog.dismiss();
-            }
-        });
+            });
 
-        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                rate = (int) v;
-                if (v > 4) {
-                    editTextFeedback.setVisibility(View.GONE);
-                } else {
-                    editTextFeedback.setVisibility(View.VISIBLE);
+            ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                @Override
+                public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                    rate = (int) v;
+                    if (v > 4) {
+                        editTextFeedback.setVisibility(View.GONE);
+                    } else {
+                        editTextFeedback.setVisibility(View.VISIBLE);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     private void sendEmailFeedback(String feedback) {
