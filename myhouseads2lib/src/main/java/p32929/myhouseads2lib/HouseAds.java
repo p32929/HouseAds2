@@ -136,6 +136,10 @@ public class HouseAds {
         this.feedbackEmail = feedbackEmail;
     }
 
+    public void setSharePreString(String sharePreString) {
+        this.sharePreString = sharePreString;
+    }
+
     public void showInterAds() {
         View view = LayoutInflater.from(context).inflate(R.layout.ads_list, null);
         linearLayoutManager = new LinearLayoutManager(context);
