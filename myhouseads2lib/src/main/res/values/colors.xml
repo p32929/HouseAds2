@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="progress">#ffff8800</color>
+    <color name="primaryText">#212121</color>
+    <color name="blueAccent">#2962FF</color>
+    <color name="seconderyText">#757575</color>
+</resources>

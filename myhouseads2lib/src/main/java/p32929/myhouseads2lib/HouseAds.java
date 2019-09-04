@@ -11,7 +11,10 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,6 +32,9 @@ public class HouseAds {
     private String TAG = this.getClass().getSimpleName();
     //
     private String countSP = "countSP";
+    private String feedbackEmail = "";
+    private String sharePreString = "Check out this Amazing Android App: ";
+    private int rate = 0;
     //
     private Context context;
     private ArrayList<MyAd> adArrayList = new ArrayList<>();
@@ -126,6 +132,10 @@ public class HouseAds {
         }
     }
 
+    public void setFeedbackEmail(String feedbackEmail) {
+        this.feedbackEmail = feedbackEmail;
+    }
+
     public void showInterAds() {
         View view = LayoutInflater.from(context).inflate(R.layout.ads_list, null);
         linearLayoutManager = new LinearLayoutManager(context);
@@ -149,7 +159,11 @@ public class HouseAds {
                 .setNeutralButton("Rate", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        rateApp();
+                        if (feedbackEmail.isEmpty()) {
+                            rateApp();
+                        } else {
+                            showRateDialog();
+                        }
                     }
                 })
                 .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
@@ -164,9 +178,51 @@ public class HouseAds {
     private void shareApp() {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "Check out this Amazing Android App: https://play.google.com/store/apps/details?id=" + context.getPackageName());
+        sendIntent.putExtra(Intent.EXTRA_TEXT, sharePreString + "https://play.google.com/store/apps/details?id=" + context.getPackageName());
         sendIntent.setType("text/plain");
         context.startActivity(sendIntent);
+    }
+
+    public void showRateDialog() {
+        View view = LayoutInflater.from(context).inflate(R.layout.rating_dialog_layout, null);
+        RatingBar ratingBar = view.findViewById(R.id.ratingBar);
+        final EditText editTextFeedback = view.findViewById(R.id.feecbackEt);
+        final Button button = view.findViewById(R.id.submitBtn);
+
+        final AlertDialog dialog = new AlertDialog.Builder(context)
+                .setView(view)
+                .show();
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (rate > 4) {
+                    rateApp();
+                } else {
+                    sendEmailFeedback(editTextFeedback.getText().toString());
+                }
+                dialog.dismiss();
+            }
+        });
+
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                rate = (int) v;
+                if (v > 4) {
+                    editTextFeedback.setVisibility(View.GONE);
+                } else {
+                    editTextFeedback.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+    }
+
+    private void sendEmailFeedback(String feedback) {
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "" + feedbackEmail, null));
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "" + context.getApplicationInfo().loadLabel(context.getPackageManager()).toString() + " feedback");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "" + feedback);
+        context.startActivity(Intent.createChooser(emailIntent, "Send email..."));
     }
 
     private void rateApp() {

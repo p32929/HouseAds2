@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
                 "https://raw.githubusercontent.com/p32929/SomeHowTosAndTexts/master/HouseAdsJson/house_ads2.json",
                 linearLayout
         );
+        houseAds.setFeedbackEmail("p32929@gmail.com");
     }
 
     @Override
