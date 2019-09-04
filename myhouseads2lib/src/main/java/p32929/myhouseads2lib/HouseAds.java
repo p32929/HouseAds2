@@ -187,6 +187,7 @@ public class HouseAds {
         if (feedbackEmail.isEmpty()) {
             rateApp();
         } else {
+            rate = 1;
             View dialogView = LayoutInflater.from(context).inflate(R.layout.rating_dialog_layout, null);
             RatingBar ratingBar = dialogView.findViewById(R.id.ratingBar);
             final EditText editTextFeedback = dialogView.findViewById(R.id.feecbackEt);
