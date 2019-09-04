@@ -188,13 +188,13 @@ public class HouseAds {
     }
 
     public void showRateDialog() {
-        View view = LayoutInflater.from(context).inflate(R.layout.rating_dialog_layout, null);
-        RatingBar ratingBar = view.findViewById(R.id.ratingBar);
-        final EditText editTextFeedback = view.findViewById(R.id.feecbackEt);
-        final Button button = view.findViewById(R.id.submitBtn);
+        View dialogView = LayoutInflater.from(context).inflate(R.layout.rating_dialog_layout, null);
+        RatingBar ratingBar = dialogView.findViewById(R.id.ratingBar);
+        final EditText editTextFeedback = dialogView.findViewById(R.id.feecbackEt);
+        final Button button = dialogView.findViewById(R.id.submitBtn);
 
         final AlertDialog dialog = new AlertDialog.Builder(context)
-                .setView(view)
+                .setView(dialogView)
                 .show();
 
         button.setOnClickListener(new View.OnClickListener() {
