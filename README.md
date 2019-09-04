@@ -12,6 +12,10 @@ A library ( V2 ) for cross promoting own apps within own apps - for Android
 
 <img src="https://user-images.githubusercontent.com/6418354/62546573-8602c380-b885-11e9-89be-12ba2643fa55.jpg" width="350">
 
+### Rating Dialog:
+
+<img src="https://user-images.githubusercontent.com/6418354/64273036-57e6d100-cf62-11e9-847e-25db88fc2d9d.jpg" width="350">
+
 ## How to use:
 ### Steps:
 * Initialize
@@ -33,7 +37,7 @@ Add the dependency
 
 ```
 dependencies {
-	        implementation 'com.github.p32929:HouseAds2:1.0.0.2'
+	        implementation 'com.github.p32929:HouseAds2:1.0.0.3'
 	}
 ```
 
@@ -62,8 +66,13 @@ To show interstitial ad on back press:
 ```
 houseAds.showInterAds();
 ```
-
 The banner ad will be added on the json data load.
+
+If you want to show a Rating Dialog before sending the user to the Google Play Store, you need to set a feedback email using `setFeedbackEmail` method like this:
+
+```
+houseAds.setFeedbackEmail("p32929@gmail.com");
+```
 
 The JSON data should be like this:
 ```
