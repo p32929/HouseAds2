@@ -25,7 +25,6 @@ import java.util.Arrays;
 
 public class HouseAds {
 
-    public static int intervalSeconds = 60;
     // Timer
     public static Handler handler = new Handler();
     private static Runnable mRunnable;
@@ -93,8 +92,6 @@ public class HouseAds {
         currentAdView = new MyAdView(context, adArrayList.get(bannerCount));
         if (linearLayout != null)
             linearLayout.addView(currentAdView);
-
-        startBannerChangeTimer();
     }
 
     private void incrementAndSaveCounter() {
@@ -106,7 +103,7 @@ public class HouseAds {
         FayazSP.put(countSP, bannerCount);
     }
 
-    private void startBannerChangeTimer() {
+    public void autoChangeBannerAds(final int intervalSeconds) {
         incrementAndSaveCounter();
 
         doSomethingAfter(intervalSeconds, new Runnable() {
@@ -117,7 +114,7 @@ public class HouseAds {
                     linearLayout.removeView(currentAdView);
                     currentAdView = new MyAdView(context, adArrayList.get(bannerCount));
                     linearLayout.addView(currentAdView);
-                    startBannerChangeTimer();
+                    autoChangeBannerAds(intervalSeconds);
                 }
             }
         });

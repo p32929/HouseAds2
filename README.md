@@ -37,7 +37,7 @@ Add the dependency
 
 ```
 dependencies {
-	        implementation 'com.github.p32929:HouseAds2:1.0.0.5'
+	        implementation 'com.github.p32929:HouseAds2:1.0.0.6'
 	}
 ```
 
@@ -67,6 +67,12 @@ To show interstitial ad on back press:
 houseAds.showInterAds();
 ```
 The banner ad will be added on the json data load.
+
+If you want to change the banner ads every `n` seconds:
+
+```
+houseAds.autoChangeBannerAds(seconds);
+```
 
 If you want to show a Rating Dialog before sending the user to the Google Play Store, you need to set a feedback email using `setFeedbackEmail` method like this:
 

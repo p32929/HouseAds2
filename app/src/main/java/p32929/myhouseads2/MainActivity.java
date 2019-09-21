@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
                 linearLayout
         );
         houseAds.setFeedbackEmail("p32929@gmail.com");
+        houseAds.autoChangeBannerAds(60);
     }
 
     @Override
