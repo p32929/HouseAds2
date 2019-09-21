@@ -92,6 +92,8 @@ public class HouseAds {
         currentAdView = new MyAdView(context, adArrayList.get(bannerCount));
         if (linearLayout != null)
             linearLayout.addView(currentAdView);
+
+        incrementAndSaveCounter();
     }
 
     private void incrementAndSaveCounter() {
@@ -104,16 +106,13 @@ public class HouseAds {
     }
 
     public void autoChangeBannerAds(final int intervalSeconds) {
-        incrementAndSaveCounter();
-
         doSomethingAfter(intervalSeconds, new Runnable() {
             @Override
             public void run() {
                 Log.d(TAG, "run: Changing Banner: " + bannerCount);
                 if (linearLayout != null) {
                     linearLayout.removeView(currentAdView);
-                    currentAdView = new MyAdView(context, adArrayList.get(bannerCount));
-                    linearLayout.addView(currentAdView);
+                    putBannerAds();
                     autoChangeBannerAds(intervalSeconds);
                 }
             }
