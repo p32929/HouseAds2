@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class HouseAds {
 
@@ -43,6 +44,7 @@ public class HouseAds {
     private LinearLayout linearLayout;
     private int bannerCount = 0;
     private MyAdView currentAdView;
+    boolean shuffleDialogAds = false;
 
     public HouseAds(final Context context, String url) {
         this.context = context;
@@ -137,6 +139,9 @@ public class HouseAds {
     }
 
     public void showInterAds() {
+        if (shuffleDialogAds)
+            Collections.shuffle(adArrayList);
+
         View view = LayoutInflater.from(context).inflate(R.layout.ads_list, null);
         linearLayoutManager = new LinearLayoutManager(context);
         recyclerView = view.findViewById(R.id.rv);
@@ -238,5 +243,9 @@ public class HouseAds {
             context.startActivity(new Intent(Intent.ACTION_VIEW,
                     Uri.parse("http://play.google.com/store/apps/details?id=" + context.getPackageName())));
         }
+    }
+
+    public void shuffleBeforeShowingDialog() {
+        shuffleDialogAds = true;
     }
 }
