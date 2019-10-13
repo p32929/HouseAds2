@@ -32,7 +32,6 @@
         android:layout_marginTop="16dp"
         android:numStars="5"
         android:progressTint="@color/progress"
-        android:rating="1"
         android:secondaryProgressTint="@color/progress"
         android:stepSize="1" />
 
@@ -47,7 +46,8 @@
         android:inputType="text|textMultiLine"
         android:lines="5"
         android:padding="16dp"
-        android:textCursorDrawable="@null" />
+        android:textCursorDrawable="@null"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/submitBtn"
