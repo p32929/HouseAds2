@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         );
         houseAds.setFeedbackEmail("p32929@gmail.com");
         houseAds.autoChangeBannerAds(60);
+        houseAds.setMenInBlack(true);
         houseAds.shuffleBeforeShowingDialog();
     }
 

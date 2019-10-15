@@ -45,6 +45,7 @@ public class HouseAds {
     private int bannerCount = 0;
     private MyAdView currentAdView;
     boolean shuffleDialogAds = false;
+    boolean menInBlack = false;
 
     public HouseAds(final Context context, String url) {
         this.context = context;
@@ -151,7 +152,7 @@ public class HouseAds {
 
         String title = adArrayList.size() == 0 ? "THANK YOU" : "RECOMMENDED APPS";
 
-        new AlertDialog
+        final AlertDialog dialog = new AlertDialog
                 .Builder(context)
                 .setTitle(title)
                 .setView(view)
@@ -172,8 +173,20 @@ public class HouseAds {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         ((Activity) context).finish();
                     }
-                })
-                .show();
+                }).create();
+
+        if (menInBlack) {
+            dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                @Override
+                public void onShow(DialogInterface dialogInterface) {
+                    dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(context.getResources().getColor(R.color.primaryText));
+                    dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(context.getResources().getColor(R.color.primaryText));
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(context.getResources().getColor(R.color.primaryText));
+                }
+            });
+        }
+
+        dialog.show();
     }
 
     private void shareApp() {
@@ -197,6 +210,10 @@ public class HouseAds {
             final AlertDialog dialog = new AlertDialog.Builder(context)
                     .setView(dialogView)
                     .show();
+
+            if (menInBlack) {
+                button.setTextColor(context.getResources().getColor(R.color.primaryText));
+            }
 
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -247,5 +264,9 @@ public class HouseAds {
 
     public void shuffleBeforeShowingDialog() {
         shuffleDialogAds = true;
+    }
+
+    public void setMenInBlack(boolean menInBlack) {
+        this.menInBlack = menInBlack;
     }
 }
