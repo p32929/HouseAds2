@@ -189,7 +189,7 @@ public class HouseAds {
         dialog.show();
     }
 
-    private void shareApp() {
+    public void shareApp() {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, sharePreString + "https://play.google.com/store/apps/details?id=" + context.getPackageName());
