@@ -2,10 +2,12 @@ package p32929.myhouseads2;
 
 import android.os.Bundle;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import p32929.myhouseads2lib.HouseAds;
+import p32929.myhouseads2lib.InterListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +29,14 @@ public class MainActivity extends AppCompatActivity {
         houseAds.autoChangeBannerAds(60);
         houseAds.setMenInBlack(true);
         houseAds.shuffleBeforeShowingDialog();
+        houseAds.setListener(new InterListener() {
+            @Override
+            public void onShow(LinearLayout linearLayoutAboveList) {
+                TextView textView = new TextView(MainActivity.this);
+                textView.setText("HELLO");
+                linearLayoutAboveList.addView(textView);
+            }
+        });
     }
 
     @Override

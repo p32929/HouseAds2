@@ -42,6 +42,7 @@ public class HouseAds {
     private RecyclerView.Adapter adapter;
     private LinearLayoutManager linearLayoutManager;
     private LinearLayout linearLayout;
+    private InterListener listener;
     private int bannerCount = 0;
     private MyAdView currentAdView;
     boolean shuffleDialogAds = false;
@@ -131,6 +132,10 @@ public class HouseAds {
         }
     }
 
+    public void setListener(InterListener listener) {
+        this.listener = listener;
+    }
+
     public void setFeedbackEmail(String feedbackEmail) {
         this.feedbackEmail = feedbackEmail;
     }
@@ -149,6 +154,7 @@ public class HouseAds {
         recyclerView.setLayoutManager(linearLayoutManager);
         adapter = new RecyclerviewAdapter(adArrayList, context);
         recyclerView.setAdapter(adapter);
+        LinearLayout linearLayoutAboveList = view.findViewById(R.id.layoutAboveList);
 
         String title = adArrayList.size() == 0 ? "THANK YOU" : "RECOMMENDED APPS";
 
@@ -187,6 +193,11 @@ public class HouseAds {
         }
 
         dialog.show();
+
+        if (listener != null) {
+            linearLayoutAboveList.removeAllViews();
+            listener.onShow(linearLayoutAboveList);
+        }
     }
 
     public void shareApp() {

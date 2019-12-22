@@ -37,7 +37,7 @@ Add the dependency
 
 ```
 dependencies {
-	        implementation 'com.github.p32929:HouseAds2:1.0.0.11'
+	        implementation 'com.github.p32929:HouseAds2:1.0.0.12'
 	}
 ```
 
