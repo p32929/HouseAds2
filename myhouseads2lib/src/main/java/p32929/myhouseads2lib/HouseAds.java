@@ -50,6 +50,7 @@ public class HouseAds {
 
     public HouseAds(final Context context, String url) {
         this.context = context;
+        FayazSP.init(context);
 
         new JsonObjectGetter(context, url, new JsonObjectGetListener() {
             @Override
