@@ -100,6 +100,15 @@ public class HouseAds {
         incrementAndSaveCounter();
     }
 
+    private void putBannerAds(LinearLayout linearLayoutAds) {
+        this.linearLayout = linearLayoutAds;
+        currentAdView = new MyAdView(context, adArrayList.get(bannerCount));
+        if (linearLayout != null)
+            linearLayout.addView(currentAdView);
+
+        incrementAndSaveCounter();
+    }
+
     private void incrementAndSaveCounter() {
         bannerCount++;
         if (bannerCount == adArrayList.size()) {
