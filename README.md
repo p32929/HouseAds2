@@ -54,7 +54,7 @@ Add the dependency
 
 ```
 dependencies {
-	        implementation 'com.github.p32929:HouseAds2:1.0.0.15'
+	        implementation 'com.github.p32929:HouseAds2:1.0.0.16'
 	}
 ```
 

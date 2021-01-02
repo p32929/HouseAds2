@@ -94,11 +94,15 @@ public class HouseAds {
     }
 
     private void putBannerAds() {
-        currentAdView = new MyAdView(context, adArrayList.get(bannerCount));
-        if (linearLayout != null)
-            linearLayout.addView(currentAdView);
+        try {
+            currentAdView = new MyAdView(context, adArrayList.get(bannerCount));
+            if (linearLayout != null)
+                linearLayout.addView(currentAdView);
 
-        incrementAndSaveCounter();
+            incrementAndSaveCounter();
+        } catch (Exception e) {
+            //
+        }
     }
 
     public void putBannerAds(LinearLayout linearLayoutAds) {
