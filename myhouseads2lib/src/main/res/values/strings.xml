@@ -1,3 +1,14 @@
 <resources>
-    <string name="app_name">MyHouseAds2Lib</string>
+    <string name="house_ads_recommended">You might also like</string>
+    <string name="house_ads_thanks">Thank you</string>
+    <string name="house_ads_share">Share</string>
+    <string name="house_ads_rate">Rate</string>
+    <string name="house_ads_exit">Exit</string>
+    <string name="house_ads_get">Get</string>
+    <string name="house_ads_badge">Ad</string>
+    <string name="house_ads_rate_title">Enjoying %1$s?</string>
+    <string name="house_ads_rate_message">Tap a star to rate it.</string>
+    <string name="house_ads_feedback_hint">What could be better? (optional)</string>
+    <string name="house_ads_not_now">Not now</string>
+    <string name="house_ads_submit">Submit</string>
 </resources>

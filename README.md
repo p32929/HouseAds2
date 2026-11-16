@@ -1,137 +1,129 @@
 # HouseAds2
 
-A library (V2) for cross-promoting your own Android apps inside your own Android apps — banner ads, interstitial ads and a rating dialog, all driven by a JSON file you host yourself. No ad network, no revenue share, no tracking.
+An Android library for promoting your own apps inside your own apps. It shows a banner, a full-screen list of your apps (an interstitial) and a rating dialog. The ads come from a JSON file you host yourself, so you can change them any time without shipping an update. There is no ad network, no tracking and no revenue share.
 
-(V1 here: https://github.com/p32929/MyHouseAdsAndroid)
+(Version 1 is here: https://github.com/p32929/MyHouseAdsAndroid)
 
 ## Features
 
-- **Banner + interstitial house ads** served from a JSON file you control
-- **Change the ads without shipping an update** — edit the JSON, every install picks it up
-- **Rating dialog** that asks for feedback by email before sending unhappy users to the Play Store
-- **Auto-rotating banners** on a timer you set
-- **No third-party SDK** — it just fetches your JSON and draws views
+1. **Banner ad** for one of your apps, with its icon, name, description and a Get button.
+2. **Interstitial** with a list of all your apps, plus Share, Rate and Exit buttons. A good fit for the back button.
+3. **Rating dialog** that sends 5-star users to the Play Store and asks everyone else for feedback by email.
+4. **Rotating banners** that switch to the next app on a timer you choose.
+5. **Change the ads without an update:** edit the JSON file and every install picks it up.
+6. **Follows your app's look:** Material 3, light and dark mode. If your app uses a Material 3 theme, the ads use your colours.
+7. **Small:** no image or networking library is added. It only depends on Material Components and RecyclerView.
 
-## Screenshot:
-### Banner Ad
+## Screenshots
 
-<img src="https://user-images.githubusercontent.com/6418354/62546571-856a2d00-b885-11e9-87e4-d3dbe24435f1.jpg" width="350">
+<img src="docs/screenshots/light.png" width="300"> <img src="docs/screenshots/dark.png" width="300">
 
-### Interstitial ad:
+## Install
 
-<img src="https://user-images.githubusercontent.com/6418354/62546573-8602c380-b885-11e9-89be-12ba2643fa55.jpg" width="350">
+1. Add JitPack to `settings.gradle.kts`:
 
-### Rating Dialog:
-
-<img src="https://user-images.githubusercontent.com/6418354/64273036-57e6d100-cf62-11e9-847e-25db88fc2d9d.jpg" width="350">
-
-## How to use:
-### Steps:
-* Initialize
-* Show ads
-
-## Installation
-Add it in your root build.gradle at the end of repositories:
-
-```gradle
-	allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
+```kotlin
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        maven("https://jitpack.io")
+    }
+}
 ```
 
-Add the dependency
+2. Add the dependency:
 
-```gradle
+```kotlin
 dependencies {
-	        implementation 'com.github.p32929:HouseAds2:1.0.0.16'
-	}
+    implementation("com.github.p32929:HouseAds2:2.0.0")
+}
 ```
 
-## Code Example:
-### Initialization:
+Needs Android 5.0 (API 21) or newer.
 
-If you just want to show interstitial ads , initialize like this:
+## The JSON file
 
-```java
-HouseAds houseAds = new HouseAds(this,
-                "https://raw.githubusercontent.com/p32929/SomeHowTosAndTexts/master/HouseAdsJson/house_ads2.json"
-        );
-```
+Host a JSON array anywhere that serves plain text, for example a GitHub file opened with "Raw". Each app has four fields:
 
-If you want to show both interstitial ads and banner ads, initialize like this:
-
-```java
-HouseAds houseAds = new HouseAds(this,
-                "https://raw.githubusercontent.com/p32929/SomeHowTosAndTexts/master/HouseAdsJson/house_ads2.json",
-                linearLayout
-        );
-```
-
-To show interstitial ad on back press:
-
-```java
-houseAds.showInterAds();
-```
-The banner ad will be added on the json data load.
-
-If you want to change the banner ads every `n` seconds:
-
-```java
-houseAds.autoChangeBannerAds(seconds);
-```
-
-If you want to show a Rating Dialog before sending the user to the Google Play Store, you need to set a feedback email using `setFeedbackEmail` method like this:
-
-```java
-houseAds.setFeedbackEmail("p32929@gmail.com");
-```
-
-The JSON data should be like this:
 ```json
 [
-	{
-		"appIcon": "https://lh3.googleusercontent.com/vvp6Ev33xPerWBBOtIRyAHl7k5c4wQ72hGwG3EU4JC-BTjfvb5DSJDeMABaRg0fy_KI",
-		"appName": "Sleepy - Phone Addiction Controller",
-		"appDescription": "The smartest app to reduce phone addiction",
-		"url": "https://play.google.com/store/apps/details?id=p32929.lazyphone"
-	},
-	{
-		"appIcon": "https://lh3.googleusercontent.com/EPW9ERgwRYA47SsgLCiA0vF7irRoPIhS0tA3JdIrgQ5-xmaqVBJKt69-jLW1JAtgD6w",
-		"appName": "Best CGPA Calculator",
-		"appDescription": "Best CGPA Calculator app for Android",
-		"url": "https://play.google.com/store/apps/details?id=p32929.cgpa_calculator2"
-	},
-	{
-		"appIcon": "https://lh3.googleusercontent.com/xtHAhxY3kp0O2hDSgLIQlXvreSQsHV-6ApulPeLJ-j4QrjyXD_OQfYdk88hbFYad8q0",
-		"appName": "Buy Sell BD",
-		"appDescription": "Buy-Sell everything easily in Bangladesh",
-		"url": "https://play.google.com/store/apps/details?id=p32929.buysellbd"
-	},
-	{
-		"appIcon": "https://lh3.googleusercontent.com/ILrto9KguXlr-clbhYKUonpnHszgNp_N5Qvc8_u9QaM71oaqNKcYql2sV3sqZ7nqzsc",
-		"appName": "Desplash",
-		"appDescription": "Beautiful automatic wallpapers from Unsplash",
-		"url": "https://play.google.com/store/apps/details?id=p32929.desplash"
-	},
-	{
-		"appIcon": "https://lh3.googleusercontent.com/ni-lk3b2nTMZyC7r1wYBW6cm9eYqGAN-t6fXV-kD0lSyw1lO3kenC1We71fZjSryvFII",
-		"appName": "The Great Postman",
-		"appDescription": "Best REST API Client for Android",
-		"url": "https://play.google.com/store/apps/details?id=p32929.greatpostman"
-	},
-	{
-		"appIcon": "https://lh3.googleusercontent.com/X8mRJd7JajvDXoW7NaluKt2IvC3osH6czkTPoWeSYJ96U2LWLKT4xiFgvNouwf-UvEk",
-		"appName": "ExIn",
-		"appDescription": "A very simple Income-Expense tracker",
-		"url": "https://play.google.com/store/apps/details?id=p32929.exin"
-	}
+  {
+    "appIcon": "https://example.com/icon.png",
+    "appName": "My Other App",
+    "appDescription": "One short line about the app",
+    "url": "https://play.google.com/store/apps/details?id=com.example.other"
+  }
 ]
 ```
 
-Check the app example in the project. Hope, you will enjoy using the library :)
+1. `appIcon`: link to a square icon image.
+2. `appName`: the app's name.
+3. `appDescription`: one or two short lines.
+4. `url`: where a tap goes, usually the Play Store page.
+
+If the list includes the app that is showing the ads, that entry is hidden automatically.
+
+## Usage
+
+### Kotlin
+
+```kotlin
+class MainActivity : AppCompatActivity() {
+    private lateinit var houseAds: HouseAds
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        // Pass a LinearLayout to get a banner as soon as the ads load.
+        houseAds = HouseAds(this, "https://your.site/ads.json", findViewById(R.id.adsLl))
+        houseAds.autoChangeBannerAds(60)           // next app every 60 seconds
+        houseAds.setFeedbackEmail("you@example.com") // turns on the rating dialog
+        houseAds.shuffleBeforeShowingDialog()
+
+        onBackPressedDispatcher.addCallback(this) { houseAds.showInterAds() }
+    }
+}
+```
+
+### Java
+
+```java
+HouseAds houseAds = new HouseAds(this, "https://your.site/ads.json", linearLayout);
+houseAds.autoChangeBannerAds(60);
+houseAds.setFeedbackEmail("you@example.com");
+
+// Later, for example on back press:
+houseAds.showInterAds();
+```
+
+### All methods
+
+1. `HouseAds(context, url)` or `HouseAds(context, url, linearLayout)`: loads the ads. With a layout, a banner is added when they arrive.
+2. `putBannerAds(linearLayout)`: shows a banner in a layout later.
+3. `autoChangeBannerAds(seconds)`: switches the banner to the next app on a timer. It stops when the Activity closes.
+4. `showInterAds()`: shows the list of your apps with Share, Rate and Exit.
+5. `showRateDialog()`: shows the rating dialog. Without a feedback email it opens the Play Store directly.
+6. `setFeedbackEmail(email)`: where feedback from 1 to 4 star ratings goes.
+7. `setSharePreString(text)`: text placed before your Play Store link when sharing.
+8. `shareApp()`: opens the share sheet with your app's link.
+9. `shuffleBeforeShowingDialog()`: shows the apps in a random order in the interstitial.
+10. `setListener(listener)`: lets you add your own views above the app list in the interstitial.
+
+Check the `app` module for a full example.
+
+## Migrating from 1.x
+
+The main calls are the same, so most apps only need to change the version number.
+
+1. **Minimum Android version** is now 5.0 (API 21), up from 4.0.3.
+2. **Picasso is no longer included.** If your app used Picasso through this library, add it to your own dependencies.
+3. **`setMenInBlack()` does nothing now.** The dialogs follow your app's theme, light or dark. It is kept so old code still compiles.
+4. **Load errors no longer show a Toast** to your users. They are written to Logcat with the tag `HouseAds`.
+5. **Removed helper classes:** `FayazSP`, `JsonObjectGetter` and `JsonObjectGetListener` were internal helpers and are gone.
+6. **`MyAdView` is now a `FrameLayout`** instead of a `RelativeLayout`.
+7. **Exit** in the interstitial still closes the Activity, as before.
 
 ## License
 

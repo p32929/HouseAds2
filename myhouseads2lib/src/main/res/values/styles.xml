@@ -1,0 +1,9 @@
+<resources>
+    <!-- Only used when the host app's theme is not Material 3. Follows light/dark mode. -->
+    <style name="HouseAds.Theme" parent="Theme.Material3.DayNight.NoActionBar" />
+
+    <style name="HouseAds.IconShape" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">14dp</item>
+    </style>
+</resources>
